@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="keywords" content="前端,h5,移动端开发,博客">
+    <meta name="author" content="tiny_may@163.com">
+    <meta name="description" content="记录前端开发道路上的点点滴滴">
+    <meta http-equiv="refresh" content="5;http://littlemay.cn">
+	<title>404页面</title>
+	<style>
+		.tip {
+			text-align: center;
+			margin-top: 20%;
+		}
+		a {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<p class="tip">哇哦，你好像走错了，<span id="tipInner"><span id="rest">5</span>秒后自动刷新至博客首页~</span></p>
+</body>
+<script src="http://cdn.66173.cn/www/js/jquery-1.8.3.min.js"></script>
+<script>
+	var rest = document.getElementById("rest");
+	var tipInner = document.getElementById("tipInner");
+	var count = 5;
+	interval1 = setInterval(function() {
+		if(--count < 1) {
+			tipInner.innerHTML = '正在跳转至<a href="http://littlemay.cn">博客</a>首页...'
+		}
+		else {
+			rest.innerHTML = count;
+		}
+	}, 1000);
+</script>
+</html>

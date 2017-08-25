@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[函数之call,apply,arguments,闭包]]></title>
+      <url>/frontend/2017-08/function/</url>
+      <content type="html"><![CDATA[<h3 id="函数的实参和形参"><a href="#函数的实参和形参" class="headerlink" title="函数的实参和形参"></a>函数的实参和形参</h3><ul>
+<li>JavaScript 的函数定义不用指定形参的类型</li>
+<li>调用传入的实参也可以是任意类型</li>
+<li>JavaScript甚至不检查传入实参的个数<h4 id="可选形参"><a href="#可选形参" class="headerlink" title="可选形参"></a>可选形参</h4></li>
+</ul>
+<p>如果调用函数的时候传入的实参比指定的形参少，剩下的形参都将设置为 undefined 值，通常使用逻辑与运算符给形参指定默认值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function getType(type) &#123;</div><div class="line">	// 如果 type 传入值则使用传入值，否则使用默认值 &quot;normal&quot;</div><div class="line">    // 通常建议可选参数放在参数列表最后</div><div class="line">	type = type || &apos;normal&apos;</div><div class="line">	// ... the rest code</div><div class="line">	return type;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="可变长的实参列表：实参对象"><a href="#可变长的实参列表：实参对象" class="headerlink" title="可变长的实参列表：实参对象"></a>可变长的实参列表：实参对象</h4><ul>
+<li>当调用函数的时候传入实参人个数超过形参个数时（和上面相反），没有办法直接获得未命名值的引用。参数对象解决了这个问题.</li>
+<li><p>在函数体内，标识符 arguments 是指向实参对象的引用，参数对象是一个 类数组对象，这样可以通过索引来访问实参了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function push(arr /* optional items [, item ... [, item]] */) &#123;</div><div class="line">	// 注意，arguments是类数组对象，不能直接使用数组的slice方法，而是要通过Array.prototype.slice.call的方式来实现数组剥离操作，后面传入1指取出从arguments数组index为1的开始向后的所有参数，如果是普通的数组，相当于arr1.slice(1)</div><div class="line">    var items = Array.prototype.slice.call(arguments, 1)</div><div class="line">    for (var i = 0; i &lt; items.length; i++) &#123;</div><div class="line">        arr[arr.length] = items[i];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">var arr1 = [1,2,3];</div><div class="line">push(arr1, 4,5,6);</div><div class="line">arr1                // =&gt; [1, 2, 3, 4, 5, 6]</div></pre></td></tr></table></figure>
+</li>
+<li><p>既然说到类数组对象arguments, 顺便来个类数组对象与数组对象的辨别吧.</p>
+</li>
+</ul>
+<ol>
+<li>类数组有哪些？ arguments, NodeList，HTML Collections,字符串</li>
+<li>类数组和数组对象都有length属性，可通过Array.prototype.xxx.call(类数组,其他参数1,其他参数2…)的方式调用slice, indexOf, lastIndexOf, forEach方法。不同的类数组会不能使用push, pop, splice, shift等方法的其中几种。</li>
+</ol>
+<ul>
+<li>NodeList，HTML Collections,字符串 只能使用Array.prototype.slice.call(NodeList),上面列举的方法均不能使用</li>
+<li><p>arguments可通过Array.prototype.xxx.call使用上面列举的方法</p>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><blockquote>
+<p>词法作用域（lexical scoping）的执行依赖于变量作用域，这个作用域是在函数 定义时 决定的，而不是函数调用时，为了实现这种词法作用域，JavaScript 函数对象的内部状态不仅包含函数的代码逻辑，还必须引用当前的作用域链。函数对象可以通过作用域链相互关联起来，函数体内部的变量都可以保存在函数作用域内，这种特性在计算机科学文献中称为「闭包」</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// 例 1</div><div class="line">var scope = &quot;global scope&quot;;</div><div class="line">function checkscope() &#123;</div><div class="line">    var scope = &quot;local scope&quot;;</div><div class="line">    function f() &#123; return scope;&#125;</div><div class="line">    return f(); //注意这里和例2的区别</div><div class="line">&#125;</div><div class="line">checkscope();       // =&gt; &quot;local scope&quot; 注意这里函数调用和例2的区别</div><div class="line">// 例 2</div><div class="line">var scope = &quot;global scope&quot;;</div><div class="line">function checkscope() &#123;</div><div class="line">    var scope = &quot;local scope&quot;;</div><div class="line">    function f() &#123; return scope;&#125;</div><div class="line">    return f; //注意这里和例1的区别</div><div class="line">&#125;</div><div class="line">checkscope()()      // =&gt; &quot;local scope&quot; 注意这里函数调用和例1的区别</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>JavaScript 函数的执行用到了作用域链，这个作用域链是函数 定义的时候 创建的，嵌套的函数 f() 定义在这个作用域链里，其中的变量 scope 一定是局部变量，不管在何时执行函数f()，这种绑定在执行 f() 时依然有效。因此最后一行代码返回「local scope」而不是「global scope」。简而言之，闭包的有个强大特性：它可以捕捉到局部变量（和参数），并一直保存下来</p>
+</li>
+</ul>
+<h5 id="趁热打铁，再来举个栗子"><a href="#趁热打铁，再来举个栗子" class="headerlink" title="趁热打铁，再来举个栗子~"></a>趁热打铁，再来举个栗子~</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function counter() &#123;</div><div class="line">    var n = 0;</div><div class="line">    return &#123;</div><div class="line">        count: function() &#123; return n++ &#125;,</div><div class="line">        reset: function() &#123; n = 0 &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// 创建两个计数器</div><div class="line">var c = counter(), d = counter();</div><div class="line">c.count()       // =&gt; 0 互</div><div class="line">c.count()       // =&gt; 1 不</div><div class="line">d.count()       // =&gt; 0 干</div><div class="line">d.count()       // =&gt; 1 扰</div><div class="line">c.reset()       // =&gt; 0 重置 c</div><div class="line">d.count()       // =&gt; 2 不影响 d</div></pre></td></tr></table></figure>]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> 函数调用 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[git的一些操作]]></title>
+      <url>/tools/2017-08/git-operation/</url>
+      <content type="html"><![CDATA[<h2 id="一，先来说些常用的非入门级的git操作"><a href="#一，先来说些常用的非入门级的git操作" class="headerlink" title="一，先来说些常用的非入门级的git操作"></a>一，先来说些常用的非入门级的git操作</h2><h4 id="1-git-stash"><a href="#1-git-stash" class="headerlink" title="1. git stash"></a>1. git stash</h4><ul>
+<li><p>你正在进行项目中某部分工作，此时又要转向另一个分支进行一些工作，但这个部分未完成不想提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git stash</div><div class="line">git checkout another_branch</div></pre></td></tr></table></figure>
+</li>
+<li><p>需要在当前分支拉最新代码，但又想先隐藏本地修改，拉完再将本地代码拉出融合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git stash</div><div class="line">git pull</div><div class="line">git stash pop</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-git提交"><a href="#2-git提交" class="headerlink" title="2. git提交"></a>2. git提交</h4><p>先添加要提交的文件，然后commit</p>
+<ul>
+<li>添加所有改动的文件 ：git add .</li>
+<li>添加某几个文件：git add file1 file2 file3<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add . &amp;&amp; git commit -m &quot;some note this commit&quot;</div><div class="line">等同于 git commit -am &apos;some note this commit&apos;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="3-git-pull-–rebase的作用，-其与-git-pull的区别"><a href="#3-git-pull-–rebase的作用，-其与-git-pull的区别" class="headerlink" title="3. git pull –rebase的作用， 其与 git pull的区别"></a>3. git pull –rebase的作用， 其与 git pull的区别</h4><ol>
+<li><p>先来说说它的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">1，git pull --rebase</div><div class="line">2，若有冲突，解决后git status看下改了哪些有冲突的文件</div><div class="line">3，git add 相应冲突文件</div><div class="line">4，git rebase —continue （若无冲突则2/3/4步可省略，这里意思就是拉线上代码并把冲突解决了，可以继续做本地修改了，不要忘记这句，如果真的不小心忘了，而且本地又做了修改并commit，后面有解决方法）</div><div class="line">5，本地又做些修改</div><div class="line">6，git add . &amp;&amp; git commit --amend （这样可以和上一个commit合为一条）</div><div class="line">7，git push</div><div class="line"></div><div class="line">注意：</div><div class="line">如果有执行2/3步却不小心忘了第4步，继续做了5/6步，当你想git push的时候，由于之前的rebase操作不完整，会无法push, 怎么办呢？低头看：</div><div class="line"></div><div class="line">git reset --soft HEAD^ </div><div class="line">上面这句会把刚才你做的commit撤销掉，但又不会把commit的文件改动撤回，完美~你可以继续git status ，看需要加哪些改动文件接着commit去吧~</div></pre></td></tr></table></figure>
+</li>
+<li><p>git pull –rebase 与 git pull到底有神马区别呢？<br>先上一张git pull的图<br><img src="/uploads/git_merge_example.jpg" alt="git_merge_example"></p>
+</li>
+</ol>
+<h5 id="出现上图交叉线原因"><a href="#出现上图交叉线原因" class="headerlink" title="出现上图交叉线原因"></a>出现上图交叉线原因</h5><pre><code>团队协作中，同伴在本地各自有新的提交，如果你在本地先commit后再git pull了同伴做的新的commit,按照 Git 的默认策略，如果远程分支和本地分支之间的提交线图有分叉的话（即不是 fast-forwarded），git 会执行一次 merge 操作，因此产生一次没意义的提交记录，从而造成了像上图那样的混乱。
+</code></pre><h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><p>假设执行pull前是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      A---B---C  remotes/origin/master</div><div class="line">     /</div><div class="line">D---E---F---G  master</div></pre></td></tr></table></figure></p>
+<p>如果执行<code>git pull</code>后，提交线图变成这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      A---B---C remotes/origin/master</div><div class="line">     /         \</div><div class="line">D---E---F---G---H master</div></pre></td></tr></table></figure></p>
+<p>可以看到，多了<code>H</code>这个没必要的记录，但如果执行<code>git pull --rebase</code>，情况就不同了、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">            remotes/origin/master</div><div class="line">                |</div><div class="line">D---E---A---B---C---F&apos;---G&apos;  master</div></pre></td></tr></table></figure></p>
+<p><code>F</code> <code>G</code>两个提交通过 <code>rebase</code> 方式重新拼接在 C 之后，多余的分叉去掉了，目的达到。<br>GIT常用命令及解释</p>
+<ul>
+<li>需注意的是，使用 git pull –rebase 比直接 pull 容易导致冲突的产生，如果预期冲突比较多的话，建议还是直接 pull。</li>
+</ul>
+<h2 id="二，初始建仓"><a href="#二，初始建仓" class="headerlink" title="二，初始建仓"></a>二，初始建仓</h2><h3 id="1-在git项目内添加自己的公钥，这样不用每次提交都让填密码，先在电脑上找出"><a href="#1-在git项目内添加自己的公钥，这样不用每次提交都让填密码，先在电脑上找出" class="headerlink" title="1. 在git项目内添加自己的公钥，这样不用每次提交都让填密码，先在电脑上找出"></a>1. 在git项目内添加自己的公钥，这样不用每次提交都让填密码，先在电脑上找出</h3><ol>
+<li>cat ~/.ssh/id_rsa.pub</li>
+<li>若上面步骤没有找到文件内容，说明还没有，进入3</li>
+<li>ssh-keygen -t rsa -C “your_email@youremail.com”（即github上注册的邮箱地址）</li>
+<li>在github上把本电脑的公钥加入，此不赘述</li>
+</ol>
+<h3 id="2-初始化仓库-和远程仓库链接-首次提交可能出现的问题"><a href="#2-初始化仓库-和远程仓库链接-首次提交可能出现的问题" class="headerlink" title="2. 初始化仓库/和远程仓库链接/首次提交可能出现的问题"></a>2. 初始化仓库/和远程仓库链接/首次提交可能出现的问题</h3><h4 id="1-在文件夹内初始化本地git仓库"><a href="#1-在文件夹内初始化本地git仓库" class="headerlink" title="1. 在文件夹内初始化本地git仓库"></a>1. 在文件夹内初始化本地git仓库</h4><p>git init</p>
+<h4 id="2-和远程git仓连接"><a href="#2-和远程git仓连接" class="headerlink" title="2. 和远程git仓连接"></a>2. 和远程git仓连接</h4><p>git remote add origin your_remote_git_project_address<br>注意，这里origin指的是所加远程地址的别名，也可以视为简写</p>
+<h4 id="3-设置本地和远程的分支对应"><a href="#3-设置本地和远程的分支对应" class="headerlink" title="3. 设置本地和远程的分支对应"></a>3. 设置本地和远程的分支对应</h4><p>可能不同git版本不太一样，根据提示敲下面的某一种<br>方法一 ：git branch –set-upstream-to=origin/master<br>方法二： git push –set-upstream origin master<br>本地git init并关联远程新建的仓库时，初次上传有两个途径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. git push -u origin gaga </div><div class="line">2. git branch --set-upstream-to=origin/gaga master</div></pre></td></tr></table></figure></p>
+<p>这两种方式都可以达到目的。但是1方法更通用，因为你的远程库有可能并没有gaga分支，这种情况下你用2方法就不可行，连目标分支都不存在，怎么进行关联呢</p>
+<h4 id="4-最开始前git-pull，把远程初始建仓的文件拉下来"><a href="#4-最开始前git-pull，把远程初始建仓的文件拉下来" class="headerlink" title="4. 最开始前git pull，把远程初始建仓的文件拉下来"></a>4. 最开始前git pull，把远程初始建仓的文件拉下来</h4><p>可能会出现<code>fatal: refusing to merge unrelated histories</code><br>这是由于历史不对应无法拉，可以强制执行<br>git pull  –allow-unrelated-histories</p>
+<h4 id="5-把本地修改后的文件放到暂存区"><a href="#5-把本地修改后的文件放到暂存区" class="headerlink" title="5. 把本地修改后的文件放到暂存区"></a>5. 把本地修改后的文件放到暂存区</h4><p>git add .</p>
+<h4 id="6-git-commit-–m-“说点啥”"><a href="#6-git-commit-–m-“说点啥”" class="headerlink" title="6. git commit –m “说点啥”"></a>6. git commit –m “说点啥”</h4><h4 id="7-git-push"><a href="#7-git-push" class="headerlink" title="7. git push"></a>7. git push</h4><h2 id="三，常用操作"><a href="#三，常用操作" class="headerlink" title="三，常用操作"></a>三，常用操作</h2><h4 id="1-创建新的分支后，和远程的链接起来"><a href="#1-创建新的分支后，和远程的链接起来" class="headerlink" title="1. 创建新的分支后，和远程的链接起来"></a>1. 创建新的分支后，和远程的链接起来</h4><p>git branch –set-upstream-to=origin/KMY(远程) KMY(本地)</p>
+<h4 id="2-强制推送"><a href="#2-强制推送" class="headerlink" title="2. 强制推送"></a>2. 强制推送</h4><p>git push –f</p>
+<h4 id="3-回滚代码commit"><a href="#3-回滚代码commit" class="headerlink" title="3. 回滚代码commit"></a>3. 回滚代码commit</h4><ul>
+<li>硬回退，即commit和代码都被回滚<br>git reset –-hard 35as345(这是commitid哦，输前几个，能和其他的区别开就行了)<br>git reset –-hard HEAD^/ HEAD^^/ HEAD~2 / HEAD~4(回退到上1/2/2/4个版本</li>
+<li>软回退，即commit回退，但改变的代码仍旧保留<br>git reset –soft 35as345 / HEAD^/ HEAD~2</li>
+</ul>
+<h4 id="4-忽略某些文件"><a href="#4-忽略某些文件" class="headerlink" title="4. 忽略某些文件"></a>4. 忽略某些文件</h4><p>git add –ignore-removal .DS_Store<br>注意：如果原先git中饭没有ignore且上传过，还要把它原来的删掉，因为之前有提交过，尚在git里</p>
+<ol>
+<li>移除本地被track的单文件<br>git rm –cached *.DS_Store</li>
+<li>移除本地被track的文件夹<br>git rm -r –cached vendor/*</li>
+</ol>
+<h4 id="5-切换分支"><a href="#5-切换分支" class="headerlink" title="5. 切换分支"></a>5. 切换分支</h4><p>git checkout certain_branch</p>
+<h4 id="6-转移项目（从gitlab到oschina）"><a href="#6-转移项目（从gitlab到oschina）" class="headerlink" title="6. 转移项目（从gitlab到oschina）"></a>6. 转移项目（从gitlab到oschina）</h4><ul>
+<li>把gitlab上原来的项目公有化，去setting里面设置哦</li>
+<li>在oschina上新建项目，导入已有（粘贴gitlab上代码地址）</li>
+<li>在本地的该项目目录下设置远端url<br>git remote set-url origin remote_new_project_address</li>
+</ul>
+<h4 id="7-可能刚拉下来一个项目却推不上去，那就"><a href="#7-可能刚拉下来一个项目却推不上去，那就" class="headerlink" title="7. 可能刚拉下来一个项目却推不上去，那就"></a>7. 可能刚拉下来一个项目却推不上去，那就</h4><p>git config receive.denyCurrentBranch ignore</p>
+<h4 id="8-本地有未stash的，又想忽略本地修改，用线上的"><a href="#8-本地有未stash的，又想忽略本地修改，用线上的" class="headerlink" title="8. 本地有未stash的，又想忽略本地修改，用线上的"></a>8. 本地有未stash的，又想忽略本地修改，用线上的</h4><p>git fetch —all   (怎么感觉不用加all)<br>git reset —hard origin/develop  (origin指向本地git设的远端推拉地址，develop指向远端的某个分支</p>
+<h4 id="9-git项目内建子git项目submodule"><a href="#9-git项目内建子git项目submodule" class="headerlink" title="9. git项目内建子git项目submodule"></a>9. git项目内建子git项目submodule</h4><ol>
+<li><p>为当前工程添加submodule，命令如下：<br><code>git submodule add 仓库地址 路径</code><br>其中，仓库地址是指子模块仓库地址，路径指将子模块放置在当前工程下的路径。<br>注意：路径不能以 / 结尾（会造成修改不生效）、不能是现有工程已有的目录（不能順利 Clone）</p>
+</li>
+<li><p>当使用git clone下来的工程中带有submodule时，初始的时候，submodule的内容并不会自动下载下来的，此时，只需执行如下命令：<br>git submodule update –init –recursive</p>
+</li>
+</ol>
+<h4 id="10-设置与查看remote-url"><a href="#10-设置与查看remote-url" class="headerlink" title="10. 设置与查看remote url"></a>10. 设置与查看remote url</h4><ol>
+<li>设置：git remote set-url short_name remote_project_address</li>
+<li>查看： git remote -v</li>
+</ol>
+<h4 id="11-自动化部署，在github上设置webhook"><a href="#11-自动化部署，在github上设置webhook" class="headerlink" title="11. 自动化部署，在github上设置webhook"></a>11. 自动化部署，在github上设置webhook</h4><p>webhook用于自动化部署，比如某个git项目文件用于线上部署，想在push后自动感应接收，线上生效。</p>
+<ol>
+<li>设置位置: certain_repository =&gt; settings =&gt; Webhooks<br>Payload为需要接收的远端地址</li>
+<li>在服务器上，要去做相应的接收钩子，没做过相应设置，自行google吧</li>
+</ol>
+<h4 id="12-Fork-后的仓库如何同步本仓库"><a href="#12-Fork-后的仓库如何同步本仓库" class="headerlink" title="12. Fork 后的仓库如何同步本仓库"></a>12. Fork 后的仓库如何同步本仓库</h4><ol>
+<li>添加 upstream 源，只需执行一次<br>git remote add upstream primary_project_address</li>
+<li>拉取远程代码<br>git pull upstream master</li>
+<li>提交修改<br>git add . &amp;&amp; git commit -m ‘xxx’</li>
+<li>更新 fork 仓库<br>git push origin master</li>
+</ol>
+<ul>
+<li>注意，这里origin指的是fork到自己的仓库地址，upstream指原项目地址即fork源</li>
+</ul>
+<h4 id="13-在本地删除远端分支"><a href="#13-在本地删除远端分支" class="headerlink" title="13. 在本地删除远端分支"></a>13. 在本地删除远端分支</h4><p>git push origin –delete release   删除远端release分支</p>
+<h4 id="14-设置大小写敏感"><a href="#14-设置大小写敏感" class="headerlink" title="14. 设置大小写敏感"></a>14. 设置大小写敏感</h4><ol>
+<li>在某个git项目文件夹内 vi .git/config  =&gt;  ignorecase = false</li>
+<li>全局设置 vi .gitconfig =&gt; git config –global core.ignorecase false</li>
+</ol>
+<h4 id="15-git-reset-与-git-revert-区别"><a href="#15-git-reset-与-git-revert-区别" class="headerlink" title="15. git reset 与 git revert 区别"></a>15. git reset 与 git revert 区别</h4><p>  git revert 撤销 某次操作，此次操作之前和之后的commit和history都会保留，并且把这次撤销作为一次最新的提交</p>
+<ol>
+<li>git revert是用一次新的commit来回滚之前的commit，git reset是直接删除指定的commit。</li>
+<li>在回滚这一操作上看，效果差不多。但是在日后继续merge以前的老版本时有区别。因为git revert是用一次逆向的commit“中和”之前的提交，因此日后合并老的branch时，导致这部分改变不会再次出现，但是git reset是之间把某些commit在某个branch上删除，因而和老的branch再次merge时，这些被回滚的commit应该还会被引入。</li>
+<li>git reset 是把HEAD向后移动了一下，而git revert是HEAD继续前进，只是新的commit的内容和要revert的内容正好相反，能够抵消要被revert的内容。</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[事件监听，捕获，冒泡]]></title>
+      <url>/frontend/2017-05/eventRelated/</url>
+      <content type="html"><![CDATA[<h2 id="addEventListener与attachEvent科普"><a href="#addEventListener与attachEvent科普" class="headerlink" title="addEventListener与attachEvent科普"></a>addEventListener与attachEvent科普</h2><blockquote>
+<p>addEventListener()是标准的绑定事件监听函数的方法，是W3C所支持的，Chrome、FireFox、Opera、Safari、IE9.0及其以上版本都支持该函数；但是，IE8.0及其以下版本不支持该方法，它使用attachEvent()来绑定事件监听函数。所以，这种绑定事件的方法必须要处理浏览器兼容问题。</p>
+</blockquote>
+<p><code>addEventListener有三个参数</code><br>element.addEventListener(type, listener, useCapture);</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>element</td>
+<td>要绑定事件的对象，及HTML节点，注意不能用$(body)形式,而要用原生的document.getElementById(“xx”)的去节点形式，用jQuery的话有$(body).on(type, handle)形式</td>
+</tr>
+<tr>
+<td>type</td>
+<td>事件名称，不要加’on’,比如’onclick’要写成’click’</td>
+</tr>
+<tr>
+<td>listener</td>
+<td>要绑定的事件监听函数，写函数名就好了，不要加括号，加括号的话绑定时就执行了，且做相应事件时不会再触发了</td>
+</tr>
+<tr>
+<td>useCapture</td>
+<td>事件监听方式，默认是false, 只能是true(捕获模式)或false(冒泡模式)</td>
+</tr>
+</tbody>
+</table>
+<p><code>attachEvent有二个参数</code><br>element.attachEvent(type, listener);（此方法没有第三个参数相关设置，不过IE的事件模型默认是在事件冒泡时执行的，也就是在useCapture等于false的时候执行）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>element</td>
+<td>要绑定事件的对象，及HTML节点，注意不能用$(body)形式,而要用原生的document.getElementById(“xx”)的去节点形式，用jQuery的话有$(body).on(type, handle)形式</td>
+</tr>
+<tr>
+<td>type</td>
+<td>事件名称，要加’on’,比如’onclick’</td>
+</tr>
+<tr>
+<td>listener</td>
+<td>要绑定的事件监听函数，写函数名就好了，不要加括号，加括号的话绑定时就执行了，且做相应事件时不会再触发了</td>
+</tr>
+</tbody>
+</table>
+<h4 id="兼容IE和非IE浏览器事件绑定代码"><a href="#兼容IE和非IE浏览器事件绑定代码" class="headerlink" title="兼容IE和非IE浏览器事件绑定代码:"></a>兼容IE和非IE浏览器事件绑定代码:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function addEvent(obj, type, handle, useCapture) &#123;</div><div class="line">	try &#123; //Chrome、FireFox、Opera、Safari、IE9.0及其以上版本</div><div class="line">		obj.addEventListener(type, handle, useCapture);</div><div class="line">	&#125; catch(e) &#123;</div><div class="line">		try &#123; //IE8.0及其以下版本</div><div class="line">			obj.attachEvent(&apos;on&apos; + type, handle);</div><div class="line">		&#125; catch(e) &#123; //早期浏览器</div><div class="line">			obj[&apos;on&apos; + type] = handle;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="冒泡与捕获在addEventListener中的应用"><a href="#冒泡与捕获在addEventListener中的应用" class="headerlink" title="冒泡与捕获在addEventListener中的应用"></a>冒泡与捕获在addEventListener中的应用</h4><blockquote>
+<p>通俗地讲，冒泡是由内向外即由子到父，捕获是由外向内即由父到子</p>
+</blockquote>
+<p><img src="http://oli108cm6.bkt.clouddn.com/maopao.png" alt="捕获与冒泡演示"></p>
+<p>设置Dom和函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function grandpa() &#123;</div><div class="line">    console.log(&quot;I am  grandpa&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function father() &#123;</div><div class="line">    console.log(&quot;I am  father&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function child() &#123;</div><div class="line">    console.log(&quot;I am child&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function grandson() &#123;</div><div class="line">    console.log(&quot;I am  grandson&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">var grandpa = document.getElementById(&quot;grandpa&quot;); </div><div class="line">var father = document.getElementById(&quot;father&quot;); </div><div class="line">var child = document.getElementById(&quot;child&quot;); </div><div class="line">var grandson = document.getElementById(&quot;grandson&quot;);</div></pre></td></tr></table></figure>
+<p>为grandpa和grandson绑定事件, 使用冒泡模式，即先触发绑定了相同触发条件（如click）的子元素事件，再逐级向外触发父元素事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">例1:</div><div class="line">grandpa.addEventListener(&quot;click&quot;, grandpa);（第三个参数不写就是默认false, 冒泡模式）</div><div class="line">grandson.addEventListener(&quot;click&quot;, grandson);</div><div class="line"></div><div class="line">点击grandson,结果为:</div><div class="line">I am  grandson</div><div class="line">I am  grandpa</div><div class="line"></div><div class="line">点击grandpa,并没有涉及到到grandson区域,结果为:</div><div class="line">I am  grandpa</div></pre></td></tr></table></figure>
+<p>为grandpa和grandson绑定事件, 使用捕获模式, 即先触发绑定了相同触发条件（如click）的父元素事件，再逐级向内触发子元素事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">grandpa.addEventListener(&quot;click&quot;, grandpa, true);</div><div class="line">grandson.addEventListener(&quot;click&quot;, grandson, true);</div><div class="line"></div><div class="line">点击grandson,结果为:</div><div class="line">I am  grandpa</div><div class="line">I am  grandson</div><div class="line"></div><div class="line">点击grandpa,并没有涉及到到grandson区域,结果为:</div><div class="line"></div><div class="line">I am  grandpa</div></pre></td></tr></table></figure>
+<h4 id="父子元素冒泡与捕获混用怎么办"><a href="#父子元素冒泡与捕获混用怎么办" class="headerlink" title="父子元素冒泡与捕获混用怎么办"></a>父子元素冒泡与捕获混用怎么办</h4><p>在上述绑定事件的代码中，第三个参数全都设置成了true或false,那如果既有true，又有false，即有的元素设置成按事件冒泡处理，有的元素设置成按事件捕获处理，那怎么办呢？</p>
+<p>来揭晓吧，浏览器更“喜爱”事件捕获：它会先把useCapture为false的元素绑定事件放到一边，按照事件捕获正常的顺序执行useCapture为true的元素绑定事件，最后在按照事件冒泡顺序执行useCapture为false的元素绑定事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">例2:</div><div class="line">grandpa.addEventListener(&quot;click&quot;, grandpa, true);</div><div class="line">father.addEventListener(&quot;click&quot;, father, false);</div><div class="line">child.addEventListener(&quot;click&quot;, child, true);</div><div class="line">grandson.addEventListener(&quot;click&quot;, grandson, false);</div><div class="line"></div><div class="line">点击grandson时，先执行useCapture为true的元素的绑定事件，</div><div class="line">又按照事件捕获原则，先执行grandpa的事件，再执行child的事件。</div><div class="line">之后，再按照事件捕获顺序执行useCapture为false的事件，输出结果如下：</div><div class="line"></div><div class="line">I am  grandpa</div><div class="line">I am  child</div><div class="line">I am  grandson</div><div class="line">I am  father</div><div class="line"></div><div class="line">点击grandpa时，并没有涉及到到father, child, grandson区域,所以输出如下：</div><div class="line">I am grandpa</div></pre></td></tr></table></figure>
+<h4 id="阻止事件冒泡和捕获"><a href="#阻止事件冒泡和捕获" class="headerlink" title="阻止事件冒泡和捕获"></a>阻止事件冒泡和捕获</h4><p>我们可以利用事件对象event的stopPropagation（）方法阻止事件的进一步传播。<br>我们修改一下grandson函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function grandson(event) &#123;</div><div class="line">    // 阻止事件的进一步传播，但仍旧会执行接下来的代码</div><div class="line">    event.stopPropagation();</div><div class="line">    console.log(&quot;I am grandson&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>沿用上面例2的事件绑定,这时我们点击grandson，控制台输出的结果是：<br>I am grandpa<br>I am child<br>I am grandson</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### addEventListener比普通的onevent(如onclick，onhover)的事件绑定区别何在呢？</div><div class="line"></div><div class="line">1. addEventListener可以为同一种事件绑定多个函数，onevent只能绑定一种，后绑定的会覆盖掉先绑定的</div><div class="line">2. addEventListener可以在第三个参数上自由定义捕获或冒泡方式，而onevent无此申明参数，是捕获还是冒泡在不同浏览其中可能表现不同</div><div class="line">3. 包括HTML元素的所有DOM都可以绑定addEventListener，都可以，而只有HTML元素可以绑定onevent</div><div class="line"></div><div class="line">#### target与currentTarget</div><div class="line">&gt; 简言之，target是事件的调用对象(event dispatcher)，currentTarget是事件的处理对象(event processor)</div><div class="line">&gt; target在事件流的目标阶段；currentTarget在事件流的捕获，目标及冒泡阶段。只有当事件流处在目标阶段的时候，两个的指向才是一样的，而当处于捕获和冒泡阶段的时候，target指向被单击的对象而currentTarget指向当前事件活动的对象（一般为父级）。</div><div class="line"></div><div class="line">话不多说，上例子</div></pre></td></tr></table></figure>
+<p>例3<br>grandpa.addEventListener(“click”, grandpa, false/true);<br>(注意，这里除了grandpa并没有和其有包含关系的元素做相同事件click的监听函数绑定，<br>故第三个参数无论冒泡或捕获并无影响)</p>
+<p>点击child，由于child在grandpa内，所以会触发grandpa（即target）绑定的click事件，此时child是currentTarget, 即target和currentTarget的指向是不同的</p>
+<p>点击grandpa时，target和currentTarget均指向grandpa</p>
+<p>```</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> 事件监听 </tag>
+            
+            <tag> 捕获 </tag>
+            
+            <tag> 冒泡 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hexo的基本使用方法]]></title>
+      <url>/tools/2017-05/hexo-start/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<h3 id="写文章"><a href="#写文章" class="headerlink" title="写文章"></a>写文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo n &apos;article_file_name&apos;</div></pre></td></tr></table></figure>
+<p>在source/_posts下将生成article_file_name.md文件</p>
+<h3 id="生成post时默认生成categories配置项"><a href="#生成post时默认生成categories配置项" class="headerlink" title="生成post时默认生成categories配置项"></a>生成post时默认生成categories配置项</h3><p>在scaffolds/post.md中，添加一行categories:。同理可应用在page.md和photo.md。</p>
+<h3 id="文章中插入图片"><a href="#文章中插入图片" class="headerlink" title="文章中插入图片"></a>文章中插入图片</h3><p>方法一：使用本地路径：在hexo/source目录下新建一个uploads文件夹，将图片放入该文件夹下，插入图片时链接即为/uploads/图片名称。<br>方法二：使用微博图床，推荐 <a href="https://portal.qiniu.com/signup" target="_blank" rel="external"><span style="color:blue">七牛</span></a>。</p>
+<h3 id="写不需要模板渲染的静态html页面"><a href="#写不需要模板渲染的静态html页面" class="headerlink" title="写不需要模板渲染的静态html页面"></a>写不需要模板渲染的静态html页面</h3><p>假设博客文件名为hexo</p>
+<p>方法一：<br>1，加入要添加static目录，根目录的_config.yml中添加 一行：<br>skip_render: [static/<strong>],<br>若有多个可在数组内添加，如 [static/</strong>, some.html]<br>2, 在hexo/source下新建sta目录，然后再写xxx.html<br>访问 server_name/static/xxx.html</p>
+<p>方法二：<br>在hexo/source下新建sta2目录，然后再写xxx.html<br>在html最上面加上两行，如下：<br><span style="color:red">注意：layout:与false之间要有空格！！！</span><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">layout: false</div><div class="line">---</div><div class="line"></div><div class="line">&lt;!DOCTYPE&gt;</div><div class="line">&lt;html&gt;</div><div class="line">....</div></pre></td></tr></table></figure></p>
+<p>访问 server_name/static/xxx.html</p>
+<h3 id="生成静态文件时奇怪事件处理"><a href="#生成静态文件时奇怪事件处理" class="headerlink" title="生成静态文件时奇怪事件处理"></a>生成静态文件时奇怪事件处理</h3><p>比如，写了个静态html文件，改了名，用 hexo g 时，会生出原来名和现在名两个文件<br>处理方法： 把根目录下的 db.json文件以及.deploy_git文件夹删了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> hexo使用 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[pc或h5（不是内嵌在app里的）网页分享到社交应用]]></title>
+      <url>/frontend/2017-05/social-share/</url>
+      <content type="html"><![CDATA[<h2 id="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"><a href="#最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录" class="headerlink" title="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"></a>最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录</h2><h3 id="说是微信不能从pc-h5这样的web页面分享呢"><a href="#说是微信不能从pc-h5这样的web页面分享呢" class="headerlink" title="说是微信不能从pc/h5这样的web页面分享呢"></a>说是微信不能从pc/h5这样的web页面分享呢</h3><h3 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">分享链接 http://connect.qq.com/widget/shareqq/index.html</div><div class="line">参数：</div><div class="line">   	url: 要被分享出去的页面链接</div><div class="line">   	title: 分享到QQ后显示的链接块的右上标题</div><div class="line">   	summay: 分享到QQ后显示的链接块的右下介绍</div><div class="line">   	pics: 分享到QQ后显示的链接块的左边图片</div><div class="line">   	desc: 分享到QQ后紧随显示的链接块下的单独消息语句</div></pre></td></tr></table></figure>
+<p><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fhttp://www.littlemay.cn%2F&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQtiny</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://admin1.66173.com&title=来自暖阳的博客o&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQlocal</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fm.66173.cn%2F%2Factivity.php%3Fact%3Dindex%23box_game2%230-sqq-1-61392-9737f6f9e09dfaf5d3fd14d775bfee85&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQniuniu</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> h5 </tag>
+            
+            <tag> 分享 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+    
+    <entry>
+      <title></title>
+      <url>/404.html</url>
+      <content type="html"><![CDATA[
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="keywords" content="前端,h5,移动端开发,博客">
+    <meta name="author" content="tiny_may@163.com">
+    <meta name="description" content="记录前端开发道路上的点点滴滴">
+    <meta http-equiv="refresh" content="5;http://littlemay.cn">
+	<title>404页面</title>
+	<style>
+		.tip {
+			text-align: center;
+			margin-top: 20%;
+		}
+		a {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<p class="tip">哇哦，你好像走错了，<span id="tipInner"><span id="rest">5</span>秒后自动刷新至博客首页~</span></p>
+</body>
+<script src="http://cdn.66173.cn/www/js/jquery-1.8.3.min.js"></script>
+<script>
+	var rest = document.getElementById("rest");
+	var tipInner = document.getElementById("tipInner");
+	var count = 5;
+	interval1 = setInterval(function() {
+		if(--count < 1) {
+			tipInner.innerHTML = '正在跳转至<a href="http://littlemay.cn">博客</a>首页...'
+		}
+		else {
+			rest.innerHTML = count;
+		}
+	}, 1000);
+</script>
+</html>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Tagcloud]]></title>
+      <url>/tags/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+  
+</search>
