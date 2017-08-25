@@ -169,72 +169,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Hexo的基本使用方法]]></title>
-      <url>/tools/2017-05/hexo-start/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-<h3 id="写文章"><a href="#写文章" class="headerlink" title="写文章"></a>写文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo n &apos;article_file_name&apos;</div></pre></td></tr></table></figure>
-<p>在source/_posts下将生成article_file_name.md文件</p>
-<h3 id="生成post时默认生成categories配置项"><a href="#生成post时默认生成categories配置项" class="headerlink" title="生成post时默认生成categories配置项"></a>生成post时默认生成categories配置项</h3><p>在scaffolds/post.md中，添加一行categories:。同理可应用在page.md和photo.md。</p>
-<h3 id="文章中插入图片"><a href="#文章中插入图片" class="headerlink" title="文章中插入图片"></a>文章中插入图片</h3><p>方法一：使用本地路径：在hexo/source目录下新建一个uploads文件夹，将图片放入该文件夹下，插入图片时链接即为/uploads/图片名称。<br>方法二：使用微博图床，推荐 <a href="https://portal.qiniu.com/signup" target="_blank" rel="external"><span style="color:blue">七牛</span></a>。</p>
-<h3 id="写不需要模板渲染的静态html页面"><a href="#写不需要模板渲染的静态html页面" class="headerlink" title="写不需要模板渲染的静态html页面"></a>写不需要模板渲染的静态html页面</h3><p>假设博客文件名为hexo</p>
-<p>方法一：<br>1，加入要添加static目录，根目录的_config.yml中添加 一行：<br>skip_render: [static/<strong>],<br>若有多个可在数组内添加，如 [static/</strong>, some.html]<br>2, 在hexo/source下新建sta目录，然后再写xxx.html<br>访问 server_name/static/xxx.html</p>
-<p>方法二：<br>在hexo/source下新建sta2目录，然后再写xxx.html<br>在html最上面加上两行，如下：<br><span style="color:red">注意：layout:与false之间要有空格！！！</span><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">layout: false</div><div class="line">---</div><div class="line"></div><div class="line">&lt;!DOCTYPE&gt;</div><div class="line">&lt;html&gt;</div><div class="line">....</div></pre></td></tr></table></figure></p>
-<p>访问 server_name/static/xxx.html</p>
-<h3 id="生成静态文件时奇怪事件处理"><a href="#生成静态文件时奇怪事件处理" class="headerlink" title="生成静态文件时奇怪事件处理"></a>生成静态文件时奇怪事件处理</h3><p>比如，写了个静态html文件，改了名，用 hexo g 时，会生出原来名和现在名两个文件<br>处理方法： 把根目录下的 db.json文件以及.deploy_git文件夹删了</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 工具 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 博客 </tag>
-            
-            <tag> hexo使用 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[pc或h5（不是内嵌在app里的）网页分享到社交应用]]></title>
-      <url>/frontend/2017-05/social-share/</url>
-      <content type="html"><![CDATA[<h2 id="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"><a href="#最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录" class="headerlink" title="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"></a>最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录</h2><h3 id="说是微信不能从pc-h5这样的web页面分享呢"><a href="#说是微信不能从pc-h5这样的web页面分享呢" class="headerlink" title="说是微信不能从pc/h5这样的web页面分享呢"></a>说是微信不能从pc/h5这样的web页面分享呢</h3><h3 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">分享链接 http://connect.qq.com/widget/shareqq/index.html</div><div class="line">参数：</div><div class="line">   	url: 要被分享出去的页面链接</div><div class="line">   	title: 分享到QQ后显示的链接块的右上标题</div><div class="line">   	summay: 分享到QQ后显示的链接块的右下介绍</div><div class="line">   	pics: 分享到QQ后显示的链接块的左边图片</div><div class="line">   	desc: 分享到QQ后紧随显示的链接块下的单独消息语句</div></pre></td></tr></table></figure>
-<p><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fhttp://www.littlemay.cn%2F&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQtiny</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://admin1.66173.com&title=来自暖阳的博客o&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQlocal</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fm.66173.cn%2F%2Factivity.php%3Fact%3Dindex%23box_game2%230-sqq-1-61392-9737f6f9e09dfaf5d3fd14d775bfee85&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQniuniu</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 前端 </tag>
-            
-            <tag> h5 </tag>
-            
-            <tag> 分享 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[事件监听，捕获，冒泡]]></title>
       <url>/frontend/2017-05/eventRelated/</url>
       <content type="html"><![CDATA[<h2 id="addEventListener与attachEvent科普"><a href="#addEventListener与attachEvent科普" class="headerlink" title="addEventListener与attachEvent科普"></a>addEventListener与attachEvent科普</h2><blockquote>
@@ -334,6 +268,72 @@
         
     </entry>
     
+    <entry>
+      <title><![CDATA[Hexo的基本使用方法]]></title>
+      <url>/tools/2017-05/hexo-start/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<h3 id="写文章"><a href="#写文章" class="headerlink" title="写文章"></a>写文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo n &apos;article_file_name&apos;</div></pre></td></tr></table></figure>
+<p>在source/_posts下将生成article_file_name.md文件</p>
+<h3 id="生成post时默认生成categories配置项"><a href="#生成post时默认生成categories配置项" class="headerlink" title="生成post时默认生成categories配置项"></a>生成post时默认生成categories配置项</h3><p>在scaffolds/post.md中，添加一行categories:。同理可应用在page.md和photo.md。</p>
+<h3 id="文章中插入图片"><a href="#文章中插入图片" class="headerlink" title="文章中插入图片"></a>文章中插入图片</h3><p>方法一：使用本地路径：在hexo/source目录下新建一个uploads文件夹，将图片放入该文件夹下，插入图片时链接即为/uploads/图片名称。<br>方法二：使用微博图床，推荐 <a href="https://portal.qiniu.com/signup" target="_blank" rel="external"><span style="color:blue">七牛</span></a>。</p>
+<h3 id="写不需要模板渲染的静态html页面"><a href="#写不需要模板渲染的静态html页面" class="headerlink" title="写不需要模板渲染的静态html页面"></a>写不需要模板渲染的静态html页面</h3><p>假设博客文件名为hexo</p>
+<p>方法一：<br>1，加入要添加static目录，根目录的_config.yml中添加 一行：<br>skip_render: [static/<strong>],<br>若有多个可在数组内添加，如 [static/</strong>, some.html]<br>2, 在hexo/source下新建sta目录，然后再写xxx.html<br>访问 server_name/static/xxx.html</p>
+<p>方法二：<br>在hexo/source下新建sta2目录，然后再写xxx.html<br>在html最上面加上两行，如下：<br><span style="color:red">注意：layout:与false之间要有空格！！！</span><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">layout: false</div><div class="line">---</div><div class="line"></div><div class="line">&lt;!DOCTYPE&gt;</div><div class="line">&lt;html&gt;</div><div class="line">....</div></pre></td></tr></table></figure></p>
+<p>访问 server_name/static/xxx.html</p>
+<h3 id="生成静态文件时奇怪事件处理"><a href="#生成静态文件时奇怪事件处理" class="headerlink" title="生成静态文件时奇怪事件处理"></a>生成静态文件时奇怪事件处理</h3><p>比如，写了个静态html文件，改了名，用 hexo g 时，会生出原来名和现在名两个文件<br>处理方法： 把根目录下的 db.json文件以及.deploy_git文件夹删了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> hexo使用 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[pc或h5（不是内嵌在app里的）网页分享到社交应用]]></title>
+      <url>/frontend/2017-05/social-share/</url>
+      <content type="html"><![CDATA[<h2 id="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"><a href="#最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录" class="headerlink" title="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"></a>最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录</h2><h3 id="说是微信不能从pc-h5这样的web页面分享呢"><a href="#说是微信不能从pc-h5这样的web页面分享呢" class="headerlink" title="说是微信不能从pc/h5这样的web页面分享呢"></a>说是微信不能从pc/h5这样的web页面分享呢</h3><h3 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">分享链接 http://connect.qq.com/widget/shareqq/index.html</div><div class="line">参数：</div><div class="line">   	url: 要被分享出去的页面链接</div><div class="line">   	title: 分享到QQ后显示的链接块的右上标题</div><div class="line">   	summay: 分享到QQ后显示的链接块的右下介绍</div><div class="line">   	pics: 分享到QQ后显示的链接块的左边图片</div><div class="line">   	desc: 分享到QQ后紧随显示的链接块下的单独消息语句</div></pre></td></tr></table></figure>
+<p><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fhttp://www.littlemay.cn%2F&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQtiny</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://admin1.66173.com&title=来自暖阳的博客o&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQlocal</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fm.66173.cn%2F%2Factivity.php%3Fact%3Dindex%23box_game2%230-sqq-1-61392-9737f6f9e09dfaf5d3fd14d775bfee85&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQniuniu</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> h5 </tag>
+            
+            <tag> 分享 </tag>
+            
+        </tags>
+        
+    </entry>
+    
   
   
     
@@ -346,7 +346,8 @@
 <head>
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-   
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="keywords" content="前端,h5,移动端开发,博客">
@@ -355,9 +356,6 @@
     <meta http-equiv="refresh" content="5;http://littlemay.cn">
 	<title>404页面</title>
 	<style>
-		html {
-			font-size: 14px;
-		}
 		.tip {
 			text-align: center;
 			margin-top: 20%;
