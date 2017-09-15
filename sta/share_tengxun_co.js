@@ -65,10 +65,15 @@
             });
           });
         } else {
+          window.mqq.ui.shareMessage(info, function(result) {
+              alert("doQQShare after:"+result.retCode+","+result)
+              // if (result.retCode === 0) {
+
+              //   data.callback && data.callback.call(this, result);
+              // }
+            });
           // window.mqq.data.setShareInfo(info);
-          window.mqq.data.setShareInfo(info,function(result) {
-            alert("doQQShare after"+result.retCode+result)
-          });
+          
         }
         if(data.judgeLoginFunc) {
             window.mqq.ui.setTitleButtons({
