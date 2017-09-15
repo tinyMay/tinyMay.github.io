@@ -269,32 +269,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[pc或h5（不是内嵌在app里的）网页分享到社交应用]]></title>
-      <url>/frontend/2017-05/social-share/</url>
-      <content type="html"><![CDATA[<h2 id="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"><a href="#最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录" class="headerlink" title="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"></a>最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录</h2><h3 id="说是微信不能从pc-h5这样的web页面分享呢"><a href="#说是微信不能从pc-h5这样的web页面分享呢" class="headerlink" title="说是微信不能从pc/h5这样的web页面分享呢"></a>说是微信不能从pc/h5这样的web页面分享呢</h3><h3 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">分享链接 http://connect.qq.com/widget/shareqq/index.html</div><div class="line">参数：</div><div class="line">   	url: 要被分享出去的页面链接</div><div class="line">   	title: 分享到QQ后显示的链接块的右上标题</div><div class="line">   	summay: 分享到QQ后显示的链接块的右下介绍</div><div class="line">   	pics: 分享到QQ后显示的链接块的左边图片</div><div class="line">   	desc: 分享到QQ后紧随显示的链接块下的单独消息语句</div></pre></td></tr></table></figure>
-<p><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fhttp://www.littlemay.cn%2F&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQtiny</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://admin1.66173.com&title=来自暖阳的博客o&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQlocal</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fm.66173.cn%2F%2Factivity.php%3Fact%3Dindex%23box_game2%230-sqq-1-61392-9737f6f9e09dfaf5d3fd14d775bfee85&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQniuniu</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 前端 </tag>
-            
-            <tag> h5 </tag>
-            
-            <tag> 分享 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Hexo的基本使用方法]]></title>
       <url>/tools/2017-05/hexo-start/</url>
       <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
@@ -329,6 +303,32 @@
             <tag> 博客 </tag>
             
             <tag> hexo使用 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[pc或h5（不是内嵌在app里的）网页分享到社交应用]]></title>
+      <url>/frontend/2017-05/social-share/</url>
+      <content type="html"><![CDATA[<h2 id="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"><a href="#最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录" class="headerlink" title="最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录"></a>最近有做pc或h5（不是内嵌在app里的）网页分享到社交应用的功能，几经探索做些总结记录</h2><h3 id="说是微信不能从pc-h5这样的web页面分享呢"><a href="#说是微信不能从pc-h5这样的web页面分享呢" class="headerlink" title="说是微信不能从pc/h5这样的web页面分享呢"></a>说是微信不能从pc/h5这样的web页面分享呢</h3><h3 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">分享链接 http://connect.qq.com/widget/shareqq/index.html</div><div class="line">参数：</div><div class="line">   	url: 要被分享出去的页面链接</div><div class="line">   	title: 分享到QQ后显示的链接块的右上标题</div><div class="line">   	summay: 分享到QQ后显示的链接块的右下介绍</div><div class="line">   	pics: 分享到QQ后显示的链接块的左边图片</div><div class="line">   	desc: 分享到QQ后紧随显示的链接块下的单独消息语句</div></pre></td></tr></table></figure>
+<p><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fhttp://www.littlemay.cn%2F&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQtiny</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://admin1.66173.com&title=来自暖阳的博客o&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQlocal</a><br><a class="share_draw" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fm.66173.cn%2F%2Factivity.php%3Fact%3Dindex%23box_game2%230-sqq-1-61392-9737f6f9e09dfaf5d3fd14d775bfee85&title=来自暖阳的博客&desc=技术博客等你来看哦&summary=来看看吧&pics=http%3A%2F%2Fcdn.66173.cn%2Fwwwv2%2Fcss%2Fimg%2Flogo.jpg" title="分享到http://www.littlemay.cn">扣扣QQniuniu</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> h5 </tag>
+            
+            <tag> 分享 </tag>
             
         </tags>
         
