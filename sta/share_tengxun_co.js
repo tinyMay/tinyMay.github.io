@@ -70,8 +70,7 @@
           mqq.ui.shareMessage(info,function(json){
             //分享成功回调
             alert(json.ret==0?"分享成功":"您取消了分享");
-          }
-        );
+          });
           
           
         // }
