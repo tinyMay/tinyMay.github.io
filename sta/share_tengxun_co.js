@@ -47,24 +47,24 @@
     var info = {title:data.title, desc:data.summary, share_url:data.url, image_url:data.pic};
     function doQQShare() {
       try {
-        if (data.callback) {
-          window.mqq.ui.setOnShareHandler(function(type) {
-            if (type == 3 && (data.swapTitle || data.WXconfig && data.WXconfig.swapTitleInWX)) {
-              info.title = data.summary;
-            } else {
-              info.title = data.title;
-            }
-            info.share_type = type;
-            info.back = true;
-            window.mqq.ui.shareMessage(info, function(result) {
-              alert("doQQShare after")
-              if (result.retCode === 0) {
+        // if (data.callback) {
+        //   window.mqq.ui.setOnShareHandler(function(type) {
+        //     if (type == 3 && (data.swapTitle || data.WXconfig && data.WXconfig.swapTitleInWX)) {
+        //       info.title = data.summary;
+        //     } else {
+        //       info.title = data.title;
+        //     }
+        //     info.share_type = type;
+        //     info.back = true;
+        //     window.mqq.ui.shareMessage(info, function(result) {
+        //       alert("doQQShare after")
+        //       if (result.retCode === 0) {
 
-                data.callback && data.callback.call(this, result);
-              }
-            });
-          });
-        } else {
+        //         data.callback && data.callback.call(this, result);
+        //       }
+        //     });
+        //   });
+        // } else {
           
           // mqq.ui.setOnShareHandler(function(type){
           //     info.share_type = type;
@@ -73,10 +73,10 @@
                  
           //     });
           // });
-          // data.callback && (info.callback = data.callback);
+          data.callback && (info.callback = data.callback);
           window.mqq.data.setShareInfo(info);
           
-        }
+        // }
         if(data.judgeLoginFunc) {
             window.mqq.ui.setTitleButtons({
                 right: {
