@@ -17,12 +17,20 @@
 </body>
 <!-- <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script> -->
 <script type="text/javascript">
-    var randomCoNum = Math.random()*10000
+    var randomNum = Math.random()*10000;
+    (function() {
+        var hm = document.createElement("script");
+        hm.src="./share_tengxun_co.js?t=" + randomNum;
+        var s = document.getElementsByTagName("title")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    
 </script>
-<script type="text/javascript" src="./share_tengxun_co.js?t=88"></script>
+<!-- <script type="text/javascript" src="./share_tengxun_co.js?t=88"></script> -->
 <script type="text/javascript">
-    alert(window.location.href + "?a=123456")
-     setShareInfo({
+    alert(window.location.href + "?a=123456");
+    window.onload = function() {
+        setShareInfo({
          title: '父爱，在你看不到的地方',
          summary: '父爱如山，感觉不到只因身在此山中',
          pic: 'http://qzonestyle.gtimg.cn/aoi/sola/20150617094556_OvfOpoRKRB.png',
@@ -44,5 +52,7 @@
         }
 
      });
+    }
+     
 </script>
 </html>
