@@ -66,17 +66,14 @@
         //   });
         // } else {
           
-          // mqq.ui.setOnShareHandler(function(type){
-          //     info.share_type = type;
-          //     info.back = true;
-          //     mqq.ui.shareMessage(info,function(result){
-                 
-          //     });
-          // });
-          
-          window.mqq.data.setShareInfo(info, function() {
-            data.callback && data.callback.call(this);
+          mqq.ui.setOnShareHandler(function(type){
+              info.share_type = type;
+              info.back = true;
+              mqq.ui.shareMessage(info,function(){
+                 data.callback && data.callback.call(this);
+              });
           });
+          
           
         // }
         if(data.judgeLoginFunc) {
