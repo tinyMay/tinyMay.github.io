@@ -65,14 +65,13 @@
         //     });
         //   });
         // } else {
-          
-          mqq.ui.setOnShareHandler(function(type){
-              info.share_type = type;
-              info.back = true;
-              mqq.ui.shareMessage(info,function(){
-                 data.callback && data.callback.call(this);
-              });
-          });
+          info.share_type = type;
+          info.back = true;
+          mqq.ui.shareMessage(info,function(json){
+            //分享成功回调
+            alert(json.ret==0?"分享成功":"您取消了分享");
+          }
+        );
           
           
         // }
