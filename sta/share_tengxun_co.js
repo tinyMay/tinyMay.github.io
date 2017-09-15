@@ -73,7 +73,7 @@
                  
           //     });
           // });
-          data.callback && (info.callback = data.callback);
+          // data.callback && (info.callback = data.callback);
           window.mqq.data.setShareInfo(info);
           
         }
