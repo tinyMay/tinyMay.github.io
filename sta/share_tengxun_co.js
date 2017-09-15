@@ -74,7 +74,9 @@
           //     });
           // });
           
-          window.mqq.data.setShareInfo(info);
+          window.mqq.data.setShareInfo(info, function() {
+            data.callback && data.callback.call(this);
+          });
           
         // }
         if(data.judgeLoginFunc) {
@@ -88,10 +90,7 @@
             })
         }
       } catch (e) {
-        var txt="There was an error on this page.\n\n";
-        txt+="Error description: " + err.message + "\n\n";
-        txt+="Click OK to continue.\n\n";
-        alert(txt);
+        
       }
     }
     if (window.mqq) {
