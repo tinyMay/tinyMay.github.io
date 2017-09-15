@@ -65,14 +65,19 @@
             });
           });
         } else {
-          // window.mqq.ui.shareMessage(info, function(result) {
-          //     alert("set doQQShare after:"+result.retCode+","+result)
-          //     // if (result.retCode === 0) {
+          window.mqq.ui.setOnShareHandler(function(type) {
+            info.share_type = type;
+            info.back = true;
+            window.mqq.ui.shareMessage(info, function(result) {
+              alert("set doQQShare after:"+result.retCode+","+result)
+              // if (result.retCode === 0) {
 
-          //     //   data.callback && data.callback.call(this, result);
-          //     // }
-          //   });
-          window.mqq.data.setShareInfo(info);
+              //   data.callback && data.callback.call(this, result);
+              // }
+            });
+          });
+        
+          // window.mqq.data.setShareInfo(info);
           
         }
         if(data.judgeLoginFunc) {
@@ -86,6 +91,10 @@
             })
         }
       } catch (e) {
+        var txt="There was an error on this page.\n\n";
+        txt+="Error description: " + err.message + "\n\n";
+        txt+="Click OK to continue.\n\n";
+        alert(txt);
       }
     }
     if (window.mqq) {
