@@ -65,25 +65,17 @@
             });
           });
         } else {
-          // window.mqq.ui.setOnShareHandler(function(type) {
-          //   info.share_type = type;
-          //   info.back = true;
-          //   window.mqq.ui.shareMessage(info, function(result) {
-          //     alert("set doQQShare after:"+result.retCode+","+result)
-          //     // if (result.retCode === 0) {
-
-          //     //   data.callback && data.callback.call(this, result);
-          //     // }
-          //   });
-          // });
-          mqq.ui.setOnShareHandler(function(type){
-              info.share_type = type;
-              info.back = true;
-              mqq.ui.shareMessage(info,function(result){
+          
+          // mqq.ui.setOnShareHandler(function(type){
+          //     info.share_type = type;
+          //     info.back = true;
+          //     mqq.ui.shareMessage(info,function(result){
                  
-              });
+          //     });
+          // });
+          window.mqq.data.setShareInfo(info, function(result) {
+            data.callback && data.callback.call(this, result);
           });
-          // window.mqq.data.setShareInfo(info);
           
         }
         if(data.judgeLoginFunc) {
