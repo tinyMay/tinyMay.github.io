@@ -47,34 +47,26 @@
     var info = {title:data.title, desc:data.summary, share_url:data.url, image_url:data.pic};
     function doQQShare() {
       try {
-        // if (data.callback) {
-        //   window.mqq.ui.setOnShareHandler(function(type) {
-        //     if (type == 3 && (data.swapTitle || data.WXconfig && data.WXconfig.swapTitleInWX)) {
-        //       info.title = data.summary;
-        //     } else {
-        //       info.title = data.title;
-        //     }
-        //     info.share_type = type;
-        //     info.back = true;
-        //     window.mqq.ui.shareMessage(info, function(result) {
-        //       alert("doQQShare after")
-        //       if (result.retCode === 0) {
-
-        //         data.callback && data.callback.call(this, result);
-        //       }
-        //     });
-        //   });
-        // } else {
-          info.share_type = type;
-          
-          mqq.ui.shareMessage(info,function(json){
-            alert("dfdf")
-            //分享成功回调
-            alert(json.ret==0?"分享成功":"您取消了分享");
-          });
-          
-          
-        // }
+        if (data.callback) {
+          // 从文档中只有setOnShareHandler能有分享成功回调，但实际用不了，连基本的分享标图片链接都不行
+          // window.mqq.ui.setOnShareHandler(function(type) {
+          //   if (type == 3 && (data.swapTitle || data.WXconfig && data.WXconfig.swapTitleInWX)) {
+          //     info.title = data.summary;
+          //   } else {
+          //     info.title = data.title;
+          //   }
+          //   info.share_type = type;
+          //   info.back = true;
+          //   window.mqq.ui.shareMessage(info, function(result) {
+          //     if (result.retCode === 0) {
+          //       data.callback && data.callback.call(this, result);
+          //     }
+          //   });
+          // });
+          window.mqq.data.setShareInfo(info);
+        } else {
+          window.mqq.data.setShareInfo(info);
+        }
         if(data.judgeLoginFunc) {
             window.mqq.ui.setTitleButtons({
                 right: {
@@ -86,7 +78,6 @@
             })
         }
       } catch (e) {
-        
       }
     }
     if (window.mqq) {
