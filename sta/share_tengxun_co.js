@@ -57,14 +57,18 @@
             info.share_type = type;
             info.back = true;
             window.mqq.ui.shareMessage(info, function(result) {
+              alert("doQQShare after")
               if (result.retCode === 0) {
-                alert("doQQShare success")
+
                 data.callback && data.callback.call(this, result);
               }
             });
           });
         } else {
-          window.mqq.data.setShareInfo(info);
+          // window.mqq.data.setShareInfo(info);
+          window.mqq.data.setShareInfo(info,function(result) {
+            alert("doQQShare after"+result.retCode+result)
+          });
         }
         if(data.judgeLoginFunc) {
             window.mqq.ui.setTitleButtons({
