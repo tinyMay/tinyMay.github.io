@@ -73,8 +73,10 @@
                  
           //     });
           // });
-          data.callback && (info.callback = data.callback);
-          window.mqq.data.setShareInfo(info);
+          
+          window.mqq.data.setShareInfo(info, function(result) {
+            data.callback && data.callback.call(this, result);
+          });
           
         // }
         if(data.judgeLoginFunc) {
