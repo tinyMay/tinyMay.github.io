@@ -74,9 +74,7 @@
           //     });
           // });
           
-          window.mqq.data.setShareInfo(info, function(result) {
-            data.callback && data.callback.call(this, result);
-          });
+          window.mqq.data.setShareInfo(info);
           
         // }
         if(data.judgeLoginFunc) {
