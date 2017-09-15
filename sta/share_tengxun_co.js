@@ -85,7 +85,7 @@
                   image_url: 'http://i.gtimg.cn/open/app_icon/05/58/35/77/1105583577_100_m.png',
                   back: true
               },function(result){
-                 alert("set doQQShare after:"+result.retCode+","+result)
+                 
               });
           });
           // window.mqq.data.setShareInfo(info);
