@@ -66,8 +66,9 @@
         //   });
         // } else {
           info.share_type = type;
-          info.back = true;
+          
           mqq.ui.shareMessage(info,function(json){
+            alert("dfdf")
             //分享成功回调
             alert(json.ret==0?"分享成功":"您取消了分享");
           });
