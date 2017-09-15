@@ -58,23 +58,12 @@
             info.back = true;
             window.mqq.ui.shareMessage(info, function(result) {
               if (result.retCode === 0) {
-                alert("doQQShare success")
                 data.callback && data.callback.call(this, result);
               }
             });
           });
         } else {
           window.mqq.data.setShareInfo(info);
-        }
-        if(data.judgeLoginFunc) {
-            window.mqq.ui.setTitleButtons({
-                right: {
-                    callback: function () {
-                        data.judgeLoginFunc && data.judgeLoginFunc.call(this);
-                        mqq.ui.showShareMenu();
-                    }
-                }
-            })
         }
       } catch (e) {
       }
