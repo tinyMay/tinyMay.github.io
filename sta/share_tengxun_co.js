@@ -65,14 +65,14 @@
             });
           });
         } else {
-          window.mqq.ui.shareMessage(info, function(result) {
-              alert("set doQQShare after:"+result.retCode+","+result)
-              // if (result.retCode === 0) {
+          // window.mqq.ui.shareMessage(info, function(result) {
+          //     alert("set doQQShare after:"+result.retCode+","+result)
+          //     // if (result.retCode === 0) {
 
-              //   data.callback && data.callback.call(this, result);
-              // }
-            });
-          // window.mqq.data.setShareInfo(info);
+          //     //   data.callback && data.callback.call(this, result);
+          //     // }
+          //   });
+          window.mqq.data.setShareInfo(info);
           
         }
         if(data.judgeLoginFunc) {
