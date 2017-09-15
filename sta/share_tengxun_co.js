@@ -65,18 +65,29 @@
             });
           });
         } else {
-          window.mqq.ui.setOnShareHandler(function(type) {
-            info.share_type = type;
-            info.back = true;
-            window.mqq.ui.shareMessage(info, function(result) {
-              alert("set doQQShare after:"+result.retCode+","+result)
-              // if (result.retCode === 0) {
+          // window.mqq.ui.setOnShareHandler(function(type) {
+          //   info.share_type = type;
+          //   info.back = true;
+          //   window.mqq.ui.shareMessage(info, function(result) {
+          //     alert("set doQQShare after:"+result.retCode+","+result)
+          //     // if (result.retCode === 0) {
 
-              //   data.callback && data.callback.call(this, result);
-              // }
-            });
+          //     //   data.callback && data.callback.call(this, result);
+          //     // }
+          //   });
+          // });
+          mqq.ui.setOnShareHandler(function(type){
+              mqq.ui.shareMessage({
+                  title: '自定义的分享标题',
+                  desc: '自定义的分享描述',
+                  share_type: type,
+                  share_url: window.location.href,
+                  image_url: 'http://i.gtimg.cn/open/app_icon/05/58/35/77/1105583577_100_m.png',
+                  back: true
+              },function(result){
+                 alert("set doQQShare after:"+result.retCode+","+result)
+              });
           });
-        
           // window.mqq.data.setShareInfo(info);
           
         }
