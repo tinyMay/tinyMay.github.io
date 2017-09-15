@@ -73,9 +73,8 @@
                  
           //     });
           // });
-          window.mqq.data.setShareInfo(info, function(result) {
-            data.callback && data.callback.call(this, result);
-          });
+          data.callback && (info.callback = data.callback);
+          window.mqq.data.setShareInfo(info);
           
         }
         if(data.judgeLoginFunc) {
