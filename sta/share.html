@@ -23,16 +23,21 @@
          summary: '父爱如山，感觉不到只因身在此山中',
          pic: 'http://qzonestyle.gtimg.cn/aoi/sola/20150617094556_OvfOpoRKRB.png',
          url: window.location.href + "?a=11111",
-         // WXconfig:       {
-         //     swapTitleInWX: true,
-         //     appId: '',
-         //     timestamp: '',
-         //     nonceStr: '',
-         //     signature: ''
+         WXconfig:       {
+             swapTitleInWX: true,
+             appId: '',
+             timestamp: '',
+             nonceStr: '',
+             signature: ''
+         },
+         // callback: function() {
+         //    alert("分享成功哦也")
          // },
-         callback: function() {
-            alert("分享成功哦也")
-         }
+         judgeLoginFunc: function() {
+            if(!userId) {
+                alert("登录后的分享链接才有效哦~");
+            }
+        }
 
      });
 </script>
