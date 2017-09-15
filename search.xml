@@ -338,12 +338,6 @@
   
     
     <entry>
-      <title><![CDATA[Tagcloud]]></title>
-      <url>/tags/index.html</url>
-      <content type="html"></content>
-    </entry>
-    
-    <entry>
       <title></title>
       <url>/404.html</url>
       <content type="html"><![CDATA[
@@ -392,34 +386,9 @@
     </entry>
     
     <entry>
-      <title></title>
-      <url>/sta/share_try.html</url>
-      <content type="html"><![CDATA[<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>share_try</title>
-</head>
-<body>
-	share try
-</body>
-<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
-<script type="text/javascript">
-     setShareInfo({
-         title: '父爱，在你看不到的地方',
-         summary: '父爱如山，感觉不到只因身在此山中',
-         pic: 'http://qzonestyle.gtimg.cn/aoi/sola/20150617094556_OvfOpoRKRB.png',
-         url: 'http://littlemay.cn/share_try.html?a=11',
-         WXconfig:       {
-             swapTitleInWX: true,
-             appId: '',
-             timestamp: '',
-             nonceStr: '',
-             signature: ''
-         }
-     });
-</script>
-</html>]]></content>
+      <title><![CDATA[Tagcloud]]></title>
+      <url>/tags/index.html</url>
+      <content type="html"></content>
     </entry>
     
   
