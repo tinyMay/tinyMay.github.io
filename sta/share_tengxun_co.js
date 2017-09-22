@@ -23,6 +23,7 @@
       var conf = data.WXconfig;
       wx.config({debug:false, appId:conf.appId, timestamp:conf.timestamp, nonceStr:conf.nonceStr, signature:conf.signature, jsApiList:["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareQZone"]});
       wx.error(function(res) {
+        alert("微信分享配置错误");
       });
       wx.ready(function() {
         var config = {title:data.title, desc:data.summary, link:data.url, imgUrl:data.pic, type:"", dataUrl:"", success:function() {
@@ -63,6 +64,7 @@
           //     }
           //   });
           // });
+          // mqq.data.setShareInfo(info, callback)中的callback属于设置完成回调，而不是用户触发分享后的成功回调
           window.mqq.data.setShareInfo(info);
         } else {
           window.mqq.data.setShareInfo(info);
